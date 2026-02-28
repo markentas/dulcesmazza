@@ -36,6 +36,14 @@
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        a, button {
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes fadeInUp {
@@ -124,6 +132,57 @@
         .hero-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(199, 138, 139, 0.4);
+        }
+
+.hero-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 16px 45px;
+            background: var(--salmon);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            border-radius: 30px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(199, 138, 139, 0.4);
+        }
+
+        .hero-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .hero-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
 
         /* Section Styles */
@@ -260,27 +319,51 @@
 
         /* Slider Section */
         .slider-section {
-            background: var(--dark);
+            background: linear-gradient(180deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .slider-section::before,
+        .slider-section::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 80px;
+            pointer-events: none;
+        }
+
+        .slider-section::before {
+            top: 0;
+            background: linear-gradient(to bottom, #1a1a1a, transparent);
+        }
+
+        .slider-section::after {
+            bottom: 0;
+            background: linear-gradient(to top, #1a1a1a, transparent);
         }
 
         .slider-container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
-            overflow: visible;
-            padding-bottom: 20px;
-            padding-left: 10px;
-            padding-right: 10px;
+            overflow: hidden;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(199, 138, 139, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .slider-wrapper {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .slider-slide {
             min-width: 100%;
-            padding: 0 5px;
+            padding: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -288,17 +371,18 @@
 
         .slider-slide img {
             width: 100%;
-            max-height: 500px;
+            max-height: 450px;
             height: auto;
             object-fit: contain;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .slider-slide img:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
+            transform: scale(1.03);
+            box-shadow: 0 15px 50px rgba(199, 138, 139, 0.2);
         }
 
         .slider-container:hover .slider-wrapper {
@@ -310,47 +394,117 @@
             justify-content: center;
             gap: 10px;
             margin-top: 25px;
-            padding-bottom: 10px;
         }
 
         .slider-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             cursor: pointer;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            border: 2px solid transparent;
         }
 
         .slider-dot.active {
             background: var(--salmon);
-            transform: scale(1.2);
+            transform: scale(1.3);
+            border-color: rgba(199, 138, 139, 0.4);
         }
 
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
+            width: 50px;
+            height: 50px;
+            background: rgba(199, 138, 139, 0.15);
+            border: 2px solid rgba(199, 138, 139, 0.3);
             border-radius: 50%;
-            color: #fff;
+            color: var(--salmon);
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .slider-arrow:hover {
             background: var(--salmon);
             color: var(--dark);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .slider-arrow.prev { left: 10px; }
-        .slider-arrow.next { right: 10px; }
+        .slider-arrow.prev { left: 15px; }
+        .slider-arrow.next { right: 15px; }
+
+        /* Decorative Carousel */
+        .decorative-carousel {
+            background: var(--dark-alt);
+            padding: 30px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .decorative-carousel::before,
+        .decorative-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .decorative-carousel::before {
+            left: 0;
+            background: linear-gradient(to right, #252525, transparent);
+        }
+
+        .decorative-carousel::after {
+            right: 0;
+            background: linear-gradient(to left, #252525, transparent);
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: scroll 25s linear infinite;
+            width: calc(80px * 20);
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-80px * 10)); }
+        }
+
+        .carousel-item {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            flex-shrink: 0;
+        }
+
+        .carousel-item i {
+            font-size: 2rem;
+            color: rgba(199, 138, 139, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-item:hover i {
+            color: var(--salmon);
+            transform: scale(1.2);
+        }
 
         /* Location Section */
         .location-section {
@@ -560,6 +714,58 @@
             box-shadow: 0 6px 20px rgba(199, 138, 139, 0.4);
         }
 
+        /* WhatsApp Contact Button */
+        .whatsapp-contact {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .categories-grid {
@@ -571,6 +777,18 @@
             .hero h1 {
                 font-size: 2.2rem;
                 letter-spacing: 4px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .hero-whatsapp {
+                width: 100%;
+                max-width: 220px;
+                justify-content: center;
+                animation-delay: 0.4s;
             }
             
             .categories-grid {
@@ -613,7 +831,37 @@
             </div>
             <h1>DULCES MAZZA</h1>
             <p>Masas caseras elaboradas con los mejores ingredientes. Disfrutá de nuestros postres artesanales.</p>
-            <a href="#categorias" class="hero-cta">Ver Catálogos</a>
+<div class="hero-buttons">
+                <a href="#galeria" class="hero-cta">ENTRAR</a>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" class="hero-whatsapp">
+                    <i class="fab fa-whatsapp"></i> CONSULTAR
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slider Section - Después del Hero -->
+    <section class="section slider-section" id="galeria">
+        <div class="section-header">
+            <h2 class="section-title">GALERÍA</h2>
+            <p class="section-subtitle">Algunos de nuestros trabajos</p>
+        </div>
+        
+        <div class="slider-container">
+            <button class="slider-arrow prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-arrow next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="slider-wrapper" id="sliderWrapper">
+                <!-- Slides se generan automáticamente -->
+            </div>
+            
+            <div class="slider-nav" id="sliderNav">
+                <!-- Dots se generan automáticamente -->
+            </div>
         </div>
     </section>
 
@@ -711,30 +959,30 @@
         </div>
     </section>
 
-    <!-- Slider Section -->
-    <section class="section slider-section">
-        <div class="section-header">
-            <h2 class="section-title">GALERÍA</h2>
-            <p class="section-subtitle">Algunos de nuestros trabajos</p>
+    <!-- Decorative Carousel -->
+    <div class="decorative-carousel">
+        <div class="carousel-track">
+            <div class="carousel-item"><i class="fas fa-birthday-cake"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie-bite"></i></div>
+            <div class="carousel-item"><i class="fas fa-mug-hot"></i></div>
+            <div class="carousel-item"><i class="fa-solid fa-stroopwafel"></i></div>
+            <div class="carousel-item"><i class="fas fa-birthday-cake"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie-bite"></i></div>
+            <div class="carousel-item"><i class="fas fa-mug-hot"></i></div>
+            <div class="carousel-item"><i class="fa-solid fa-stroopwafel"></i></div>
+            <div class="carousel-item"><i class="fas fa-birthday-cake"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie-bite"></i></div>
+            <div class="carousel-item"><i class="fas fa-mug-hot"></i></div>
+            <div class="carousel-item"><i class="fa-solid fa-stroopwafel"></i></div>
+            <div class="carousel-item"><i class="fas fa-birthday-cake"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie"></i></div>
+            <div class="carousel-item"><i class="fas fa-cookie-bite"></i></div>
+            <div class="carousel-item"><i class="fas fa-mug-hot"></i></div>
         </div>
-        
-        <div class="slider-container">
-            <button class="slider-arrow prev" onclick="changeSlide(-1)">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="slider-arrow next" onclick="changeSlide(1)">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <div class="slider-wrapper" id="sliderWrapper">
-                <!-- Slides se generan automáticamente -->
-            </div>
-            
-            <div class="slider-nav" id="sliderNav">
-                <!-- Dots se generan automáticamente -->
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Image Modal -->
     <div class="modal-image" id="imageModal" onclick="closeImageModal(event)">
@@ -798,6 +1046,11 @@
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
         <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" class="whatsapp-float" id="whatsappFloat">
+        <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
@@ -940,21 +1193,25 @@
             loadSliderImages();
             
             const backToTopBtn = document.getElementById('backToTop');
+            const whatsappFloat = document.getElementById('whatsappFloat');
             const locationSection = document.querySelector('.location-section');
 
-            function checkBackToTop() {
+            function checkButtons() {
                 const locationPosition = locationSection.getBoundingClientRect().top;
                 const screenHeight = window.innerHeight;
                 
+                // Back to top y WhatsApp float - muestran cuando llegás a ubicación
                 if (locationPosition < screenHeight - 100) {
                     backToTopBtn.classList.add('visible');
+                    whatsappFloat.classList.add('visible');
                 } else {
                     backToTopBtn.classList.remove('visible');
+                    whatsappFloat.classList.remove('visible');
                 }
             }
 
-            checkBackToTop();
-            window.addEventListener('scroll', checkBackToTop);
+            checkButtons();
+            window.addEventListener('scroll', checkButtons);
         });
     </script>
 </body>
