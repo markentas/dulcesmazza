@@ -317,6 +317,146 @@
             transform: scale(1.05);
         }
 
+        /* Disponibles Section */
+        .disponibles-section {
+            background: var(--dark-alt);
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .producto-card {
+            background: linear-gradient(145deg, #2a2a2a 0%, #1e1e1e 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(199, 138, 139, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--salmon);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .producto-card.agotado {
+            opacity: 0.5;
+            filter: grayscale(70%);
+        }
+
+        .producto-card.agotado:hover {
+            transform: none;
+            border-color: rgba(199, 138, 139, 0.2);
+            box-shadow: none;
+        }
+
+        .producto-imagen {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .producto-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .producto-nombre {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .producto-precio {
+            font-size: 1.3rem;
+            color: var(--salmon);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .producto-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--salmon);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .producto-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(199, 138, 139, 0.4);
+        }
+
+        .producto-agotado-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #444;
+            color: #888;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            border-radius: 20px;
+        }
+
+        .disponibles-mensaje {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 30px;
+            background: linear-gradient(145deg, #252525 0%, #1e1e1e 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(199, 138, 139, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .disponibles-mensaje i {
+            font-size: 2.5rem;
+            color: var(--salmon);
+            opacity: 0.6;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .disponibles-mensaje-leyenda {
+            display: block;
+            color: var(--rosa);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .disponibles-mensaje p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .disponibles-mensaje .producto-btn {
+            background: transparent;
+            border: 2px solid var(--salmon);
+            color: var(--salmon);
+        }
+
+        .disponibles-mensaje .producto-btn:hover {
+            background: var(--salmon);
+            color: var(--dark);
+        }
+
         /* Slider Section */
         .slider-section {
             background: linear-gradient(180deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
@@ -845,6 +985,16 @@
                 justify-content: center;
                 animation-delay: 0.4s;
             }
+
+            .productos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 0 10px;
+            }
+            
+            .producto-imagen {
+                height: 150px;
+            }
             
             .categories-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -887,11 +1037,23 @@
             <h1>DULCES MAZZA</h1>
             <p>Masas caseras elaboradas con los mejores ingredientes. Disfrutá de nuestros postres artesanales.</p>
 <div class="hero-buttons">
-                <a href="#galeria" class="hero-cta">ENTRAR</a>
+                <a href="#disponibles" class="hero-cta">ENTRAR</a>
                 <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" class="hero-whatsapp">
                     <i class="fab fa-whatsapp"></i> CONSULTAR
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Disponibles Ahora Section -->
+    <section class="section disponibles-section" id="disponibles">
+        <div class="section-header">
+            <h2 class="section-title">DISPONIBLES AHORA</h2>
+            <p class="section-subtitle">Hace tu pedido</p>
+        </div>
+        
+        <div class="productos-grid" id="productosGrid">
+            <!-- Se carga dinámicamente -->
         </div>
     </section>
 
@@ -1117,6 +1279,53 @@
     <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20hacer%20un%20pedido" target="_blank" class="whatsapp-float" id="whatsappFloat">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- Productos Script -->
+    <script src="productos/productos.js"></script>
+    <script>
+        function renderizarProductos() {
+            const grid = document.getElementById('productosGrid');
+            
+            // Verificar si hay productos disponibles
+            const disponibles = productos.filter(p => p.disponible === 1);
+            
+            if (disponibles.length === 0) {
+                // Todos agotados - mostrar mensaje
+                grid.innerHTML = `
+                    <div class="disponibles-mensaje">
+                        <i class="fas fa-cookie-bite"></i>
+                        <span class="disponibles-mensaje-leyenda">Cuando haya masas disponibles a la venta, aparecerán aquí.</span>
+                        <p>Podes hacer tu encargo<br>desde las categorías.</p>
+                        <a href="#categorias" class="producto-btn">VER CATÁLOGOS</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Renderizar productos
+            grid.innerHTML = productos.map((producto) => {
+                const esAgotado = producto.disponible === 0;
+                const mensajeWhatsApp = `Hola%2C%20quiero%20pedir%20${encodeURIComponent(producto.nombre)}`;
+                
+                return `
+                    <div class="producto-card ${esAgotado ? 'agotado' : ''}">
+                        <img src="productos/img/${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
+                        <div class="producto-info">
+                            <h3 class="producto-nombre">${producto.nombre}</h3>
+                            <p class="producto-precio">${producto.precio}</p>
+                            ${esAgotado 
+                                ? '<span class="producto-agotado-badge">AGOTADO</span>' 
+                                : `<a href="https://wa.me/5493873237712?text=${mensajeWhatsApp}" target="_blank" class="producto-btn">PEDIR</a>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Cargar productos al inicio
+        document.addEventListener('DOMContentLoaded', renderizarProductos);
+    </script>
 
     <script>
         // Slider automático con imágenes numeradas
