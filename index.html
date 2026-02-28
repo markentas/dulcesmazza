@@ -361,6 +361,61 @@
             transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        /* Slider Loader */
+        .slider-loader {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .loader-icons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .loader-icons i {
+            font-size: 2rem;
+            color: var(--salmon);
+            animation: loaderRotate 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .loader-icons i:nth-child(1) { animation-delay: 0s; }
+        .loader-icons i:nth-child(2) { animation-delay: 0.2s; }
+        .loader-icons i:nth-child(3) { animation-delay: 0.4s; }
+        .loader-icons i:nth-child(4) { animation-delay: 0.6s; }
+        .loader-icons i:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes loaderRotate {
+            0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            20% { opacity: 1; transform: scale(1) rotate(0deg); }
+            80% { opacity: 1; transform: scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0.5) rotate(180deg); }
+        }
+
+        .loader-text {
+            font-size: 1.2rem;
+            color: var(--gray-light);
+            letter-spacing: 2px;
+        }
+
+        .loader-dots::after {
+            content: '';
+            animation: loaderDots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes loaderDots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: ''; }
+        }
+
         .slider-slide {
             min-width: 100%;
             padding: 10px;
@@ -856,7 +911,17 @@
             </button>
             
             <div class="slider-wrapper" id="sliderWrapper">
-                <!-- Slides se generan automáticamente -->
+                <!-- Loader -->
+                <div class="slider-loader" id="sliderLoader">
+                    <div class="loader-icons">
+                        <i class="fas fa-birthday-cake"></i>
+                        <i class="fas fa-cookie"></i>
+                        <i class="fas fa-cheese"></i>
+                        <i class="fas fa-cookie-bite"></i>
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <span class="loader-text">Cargando delicias<span class="loader-dots"></span></span>
+                </div>
             </div>
             
             <div class="slider-nav" id="sliderNav">
@@ -1092,6 +1157,8 @@
 
             // Si no hay imágenes, mostrar mensaje
             if (slideImages.length === 0) {
+                const loader = document.getElementById('sliderLoader');
+                if (loader) loader.style.display = 'none';
                 wrapper.innerHTML = '<p style="text-align:center;color:#888;">No hay imágenes en la galería</p>';
                 return;
             }
@@ -1106,6 +1173,10 @@
                 slide.innerHTML = `<img src="img/slider/${imgNum}.jpg" alt="Dulces Mazza" onclick="openImageModal('img/slider/${imgNum}.jpg')">`;
                 wrapper.appendChild(slide);
             });
+
+            // Ocultar loader
+            const loader = document.getElementById('sliderLoader');
+            if (loader) loader.style.display = 'none';
 
             // Generar dots
             slideImages.forEach((_, index) => {
