@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulces Mazza - Masas Caseras</title>
+    <link rel="icon" type="image/svg+xml" href="img/dulcesmazza.svg">
+    <link rel="apple-touch-icon" href="img/dulcesmazza.svg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --salmon: #c78a8b;
+            --rosa: #acced7;
+            --amarillo: #ecdf8b;
+            --blanco: #ffffff;
+            --dark: #1a1a1a;
+            --dark-alt: #252525;
+            --gray: #666;
+            --gray-light: #888;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', system-ui, sans-serif;
+            background: var(--dark);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2a2020 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 30%, rgba(199, 138, 139, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .hero-icon img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 6px;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 span {
+            color: var(--salmon);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            max-width: 500px;
+            margin: 0 auto 35px;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 16px 45px;
+            background: var(--salmon);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            border-radius: 30px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(199, 138, 139, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .section-subtitle {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Categories Grid */
+        .categories-section {
+            background: var(--dark-alt);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, #252525 0%, #1e1e1e 100%);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-color);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-card.salmon { --card-color: var(--salmon); }
+        .category-card.rosa { --card-color: var(--rosa); }
+        .category-card.amarillo { --card-color: var(--amarillo); }
+
+        .category-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 180px;
+            padding: 25px 15px;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--card-color);
+            border-radius: 10px;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 0.6;
+        }
+
+        .category-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: transparent;
+            border: 2px solid var(--card-color);
+            color: var(--card-color);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-cta:hover {
+            background: var(--card-color);
+            color: var(--dark);
+            transform: scale(1.05);
+        }
+
+        /* Slider Section */
+        .slider-section {
+            background: var(--dark);
+        }
+
+        .slider-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: visible;
+            padding-bottom: 20px;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-slide {
+            min-width: 100%;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-slide img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .slider-slide img:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+
+        .slider-container:hover .slider-wrapper {
+            animation-play-state: paused;
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding-bottom: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .slider-dot.active {
+            background: var(--salmon);
+            transform: scale(1.2);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-arrow:hover {
+            background: var(--salmon);
+            color: var(--dark);
+        }
+
+        .slider-arrow.prev { left: 10px; }
+        .slider-arrow.next { right: 10px; }
+
+        /* Location Section */
+        .location-section {
+            background: var(--dark-alt);
+        }
+
+        .location-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Image Modal */
+        .modal-image {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-image.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-image-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-image-close:hover {
+            background: var(--salmon);
+            transform: rotate(90deg);
+        }
+
+        .location-map {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .location-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .location-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .location-item {
+            text-align: center;
+        }
+
+        .location-item i {
+            font-size: 1.5rem;
+            color: var(--salmon);
+            margin-bottom: 10px;
+        }
+
+        .location-item p {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--salmon);
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .footer-projects {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-project {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            min-width: 130px;
+        }
+
+        .footer-project:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--salmon);
+            transform: translateY(-3px);
+        }
+
+        .footer-project-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-project-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-project-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .footer-project-label {
+            font-size: 0.6rem;
+            color: var(--gray-light);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--salmon);
+            color: var(--dark);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(199, 138, 139, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 0.8;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(199, 138, 139, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .slider-slide img {
+                height: 280px;
+            }
+            
+            .location-info {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-projects {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <img src="img/dulcesmazza.svg" alt="Dulces Mazza">
+            </div>
+            <h1>DULCES MAZZA</h1>
+            <p>Masas caseras elaboradas con los mejores ingredientes. Disfrutá de nuestros postres artesanales.</p>
+            <a href="#categorias" class="hero-cta">Ver Catálogos</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section categories-section" id="categorias">
+        <div class="section-header">
+            <h2 class="section-title">NUESTROS PRODUCTOS</h2>
+            <p class="section-subtitle">Explorá nuestra variedad</p>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card salmon">
+                <h3 class="category-name">Postres</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Postres" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card rosa">
+                <h3 class="category-name">Pastafrolas</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Pastafrolas" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card amarillo">
+                <h3 class="category-name">Cupcakes</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Cupcakes" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card salmon">
+                <h3 class="category-name">Tortas con Temática</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Tortas%20con%20Tem%C3%A1tica" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card rosa">
+                <h3 class="category-name">Roscas</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Roscas" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card salmon">
+                <h3 class="category-name">Tortas de Chocolate</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Tortas%20de%20Chocolate" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card rosa">
+                <h3 class="category-name">Maizenitas</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Maizenitas" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card amarillo">
+                <h3 class="category-name">Pastafrola</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Pastafrola" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card salmon">
+                <h3 class="category-name">Tartas Mixtas</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Tartas%20Mixtas" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card rosa">
+                <h3 class="category-name">Budín de Pan</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Bud%C3%ADn%20de%20Pan" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card amarillo">
+                <h3 class="category-name">Alfajores de Maicena</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Alfajores%20de%20Maicena" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+            
+            <div class="category-card salmon">
+                <h3 class="category-name">Lemon Pie</h3>
+                <a href="https://wa.me/5493873237712?text=Hola%2C%20quiero%20consultar%20por%20Lemon%20Pie" target="_blank" class="category-cta">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slider Section -->
+    <section class="section slider-section">
+        <div class="section-header">
+            <h2 class="section-title">GALERÍA</h2>
+            <p class="section-subtitle">Algunos de nuestros trabajos</p>
+        </div>
+        
+        <div class="slider-container">
+            <button class="slider-arrow prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-arrow next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="slider-wrapper" id="sliderWrapper">
+                <!-- Slides se generan automáticamente -->
+            </div>
+            
+            <div class="slider-nav" id="sliderNav">
+                <!-- Dots se generan automáticamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div class="modal-image" id="imageModal" onclick="closeImageModal(event)">
+        <button class="modal-image-close" onclick="closeImageModalBtn()">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImageSrc" src="" alt="Dulces Mazza">
+    </div>
+
+    <!-- Location Section -->
+    <section class="section location-section">
+        <div class="section-header">
+            <h2 class="section-title">UBICACIÓN</h2>
+            <p class="section-subtitle">Visitanos</p>
+        </div>
+        
+        <div class="location-content">
+            <div class="location-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3697.986636028192!2d-63.70325032375954!3d-22.05010670781877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x940f2fdae005d867%3A0x173d1c0cc83ab0d5!2sDulces%20Mazza!5e0!3m2!1ses!2sar!4v1772248069077!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>            </div>
+            
+            <div class="location-info">
+                <div class="location-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <p>+54 9 3873 237712</p>
+                </div>
+                <div class="location-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Salta, Argentina</p>
+                </div>
+                <div class="location-item">
+                    <i class="fas fa-clock"></i>
+                    <p>Lun - Sáb: 9:00 - 20:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">DULCES MAZZA</div>
+        <p class="footer-text">Visita también:</p>
+        
+        <div class="footer-projects">
+            <a href="../" target="_blank" class="footer-project">
+                <div class="footer-project-icon">
+                    <img src="img/favicon.svg" alt="Markentas">
+                </div>
+                <span class="footer-project-name">Markentas</span>
+                <span class="footer-project-label">Tarjetas Digitales</span>
+            </a>
+            <a href="../organogold" target="_blank" class="footer-project">
+                <div class="footer-project-icon">
+                    <img src="img/organogold.svg" alt="OrganoGold">
+                </div>
+                <span class="footer-project-name">OrganoGold</span>
+                <span class="footer-project-label">Café Premium</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <script>
+        // Slider automático con imágenes numeradas
+        let currentSlide = 0;
+        let slideImages = [];
+        let maxImages = 100; // Busca hasta esta cantidad
+
+        // Función para mezclar array (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Cargar imágenes automáticamente
+        async function loadSliderImages() {
+            const wrapper = document.getElementById('sliderWrapper');
+            const nav = document.getElementById('sliderNav');
+            
+            // Detectar imágenes existentes (1.jpg, 2.jpg, etc.)
+            for (let i = 1; i <= maxImages; i++) {
+                const img = new Image();
+                img.src = `img/slider/${i}.jpg`;
+                
+                try {
+                    await new Promise((resolve, reject) => {
+                        img.onload = () => resolve(true);
+                        img.onerror = () => reject(false);
+                    });
+                    slideImages.push(i);
+                } catch (e) {
+                    // Cuando no encuentra más imágenes, termina
+                    if (slideImages.length > 0) break;
+                }
+            }
+
+            // Si no hay imágenes, mostrar mensaje
+            if (slideImages.length === 0) {
+                wrapper.innerHTML = '<p style="text-align:center;color:#888;">No hay imágenes en la galería</p>';
+                return;
+            }
+
+            // Mezclar aleatoriamente
+            slideImages = shuffleArray(slideImages);
+
+            // Generar slides
+            slideImages.forEach((imgNum, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slider-slide';
+                slide.innerHTML = `<img src="img/slider/${imgNum}.jpg" alt="Dulces Mazza" onclick="openImageModal('img/slider/${imgNum}.jpg')">`;
+                wrapper.appendChild(slide);
+            });
+
+            // Generar dots
+            slideImages.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'slider-dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(index);
+                nav.appendChild(dot);
+            });
+
+            // Iniciar slider
+            initSlider();
+        }
+
+        // Inicializar slider después de cargar imágenes
+        function initSlider() {
+            const slides = document.querySelectorAll('.slider-slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            const wrapper = document.getElementById('sliderWrapper');
+            const container = document.querySelector('.slider-container');
+            let autoSlideInterval;
+
+            function updateSlider() {
+                wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            window.changeSlide = function(direction) {
+                currentSlide += direction;
+                if (currentSlide < 0) currentSlide = slides.length - 1;
+                if (currentSlide >= slides.length) currentSlide = 0;
+                updateSlider();
+            };
+
+            window.goToSlide = function(index) {
+                currentSlide = index;
+                updateSlider();
+            };
+
+            // Pausar en hover
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 5000);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            // Eventos hover para pausar
+            container.addEventListener('mouseenter', stopAutoSlide);
+            container.addEventListener('mouseleave', startAutoSlide);
+
+            // Iniciar auto slide
+            startAutoSlide();
+        }
+
+        // Modal functions
+        window.openImageModal = function(src) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImageSrc');
+            img.src = src;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeImageModal = function(event) {
+            if (event.target.id === 'imageModal') {
+                const modal = document.getElementById('imageModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        window.closeImageModalBtn = function() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        // Back to Top - Show when reaching location section
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSliderImages();
+            
+            const backToTopBtn = document.getElementById('backToTop');
+            const locationSection = document.querySelector('.location-section');
+
+            function checkBackToTop() {
+                const locationPosition = locationSection.getBoundingClientRect().top;
+                const screenHeight = window.innerHeight;
+                
+                if (locationPosition < screenHeight - 100) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            }
+
+            checkBackToTop();
+            window.addEventListener('scroll', checkBackToTop);
+        });
+    </script>
+</body>
+</html>
