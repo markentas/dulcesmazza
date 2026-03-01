@@ -426,7 +426,14 @@
             font-size: 1.3rem;
             color: var(--salmon);
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+        }
+
+        .producto-disponibles {
+            font-size: 0.85rem;
+            color: var(--rosa);
+            font-weight: 500;
+            margin-bottom: 12px;
         }
 
         .producto-btn {
@@ -1331,50 +1338,6 @@
 
     <!-- Productos Script -->
     <script src="productos/productos.js"></script>
-    <script>
-        function renderizarProductos() {
-            const grid = document.getElementById('productosGrid');
-            
-            // Verificar si hay productos disponibles
-            const disponibles = productos.filter(p => p.disponible === 1);
-            
-            if (disponibles.length === 0) {
-                // Todos agotados - mostrar mensaje
-                grid.innerHTML = `
-                    <div class="disponibles-mensaje">
-                        <i class="fas fa-cookie-bite"></i>
-                        <span class="disponibles-mensaje-leyenda">Cuando haya masas disponibles a la venta, aparecerán aquí.</span>
-                        <p>Podes hacer tu encargo<br>desde las categorías.</p>
-                        <a href="#categorias" class="producto-btn">VER CATÁLOGOS</a>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Renderizar productos
-            grid.innerHTML = productos.map((producto) => {
-                const esAgotado = producto.disponible === 0;
-                const mensajeWhatsApp = `Hola%2C%20quiero%20pedir%20${encodeURIComponent(producto.nombre)}`;
-                
-                return `
-                    <div class="producto-card ${esAgotado ? 'agotado' : ''}">
-                        <img src="productos/img/${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
-                        <div class="producto-info">
-                            <h3 class="producto-nombre">${producto.nombre}</h3>
-                            <p class="producto-precio">${producto.precio}</p>
-                            ${esAgotado 
-                                ? '<span class="producto-agotado-badge">AGOTADO</span>' 
-                                : `<a href="https://wa.me/5493873237712?text=${mensajeWhatsApp}" target="_blank" class="producto-btn">PEDIR</a>`
-                            }
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Cargar productos al inicio
-        document.addEventListener('DOMContentLoaded', renderizarProductos);
-    </script>
 
     <script>
         // Slider automático con imágenes numeradas
