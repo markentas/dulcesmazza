@@ -1,4 +1,73 @@
-const PRODUCTOS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTcruLY7QkYt0oByvSQqsUlw2LkTYtLSAWATmCZeUjqWkAMB0Ngr7EZyySmJ9akJbB38REa5sHDkNYt/pub?output=csv';
+const PRODUCTOS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRiVbA-NGrlRAZFV__2mMy5Cdw3FOsrD7hA5HiovvBYZDK9BeLk3aZs28UjQVuaceEKHHoDgdTd36VY/pub?output=csv';
+
+let productosGlobal = [];
+let categoriaActual = 'todos';
+
+function parseCSVLine(linea) {
+    const resultado = [];
+    let campoActual = '';
+    let enComillas = false;
+    
+    for (let i = 0; i < linea.length; i++) {
+        const char = linea[i];
+        
+        if (char === '"') {
+            enComillas = !enComillas;
+        } else if (char === ',' && !enComillas) {
+            resultado.push(campoActual.trim());
+            campoActual = '';
+        } else {
+            campoActual += char;
+        }
+    }
+    resultado.push(campoActual.trim());
+    
+    return resultado;
+}
+
+function renderizarFiltroCategorias(categorias) {
+    const contenedor = document.getElementById('filtroCategorias');
+    
+    if (!contenedor) return;
+    
+    const categoriasUnicas = ['todos', ...categorias.filter(c => c && c.trim() !== '')];
+    
+    contenedor.innerHTML = `
+        <div class="filtro-categorias">
+            <button class="categoria-btn ${categoriaActual === 'todos' ? 'active' : ''}" data-categoria="todos">
+                Ver todos
+            </button>
+            ${categoriasUnicas.slice(1).map(cat => `
+                <button class="categoria-btn ${categoriaActual === cat ? 'active' : ''}" data-categoria="${cat}">
+                    ${cat}
+                </button>
+            `).join('')}
+        </div>
+    `;
+    
+    contenedor.querySelectorAll('.categoria-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            categoriaActual = btn.dataset.categoria;
+            document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filtrarProductos();
+        });
+    });
+}
+
+function filtrarProductos() {
+    let productosFiltrados;
+    
+    if (categoriaActual === 'todos') {
+        productosFiltrados = productosGlobal;
+    } else {
+        productosFiltrados = productosGlobal.filter(p => 
+            p.categoria?.toLowerCase() === categoriaActual.toLowerCase()
+        );
+    }
+    
+    renderizarProductos(productosFiltrados);
+}
 
 function renderizarProductos(productos) {
     const grid = document.getElementById('productosGrid');
@@ -8,10 +77,8 @@ function renderizarProductos(productos) {
         return;
     }
     
-    // Verificar si hay ALGUN producto con cantidad > 0
     const hayDisponibles = productos.some(p => p.cantidad > 0);
     
-    // Si NO hay ninguno disponible, mostrar mensaje
     if (!hayDisponibles) {
         grid.innerHTML = `
             <div class="disponibles-mensaje">
@@ -24,13 +91,11 @@ function renderizarProductos(productos) {
         return;
     }
     
-    // Si hay algunos disponibles, mostrar TODOS los productos
     grid.innerHTML = productos.map((producto) => {
         const cantidad = parseInt(producto.cantidad) || 0;
         const esAgotado = cantidad === 0;
         const mensajeWhatsApp = `Hola%2C%20quiero%20pedir%20${encodeURIComponent(producto.nombre)}`;
         
-        // Si es URL completa (contiene http/https), usar directa; si no, buscar en carpeta local
         const imagenSrc = (producto.imagen && (producto.imagen.startsWith('http') || producto.imagen.startsWith('https')))
             ? producto.imagen 
             : `productos/img/${producto.imagen}`;
@@ -43,6 +108,7 @@ function renderizarProductos(productos) {
                 <img src="${imagenSrc}" alt="${producto.nombre}" class="producto-imagen">
                 <div class="producto-info">
                     <h3 class="producto-nombre">${producto.nombre}</h3>
+                    <p class="producto-descripcion">${producto.descripcion || ''}</p>
                     <p class="producto-precio">${precioFormateado}</p>
                     ${esAgotado 
                         ? '<span class="producto-agotado-badge">AGOTADO</span>' 
@@ -63,29 +129,24 @@ async function cargarProductos() {
         const textoNormalizado = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         let lineas = textoNormalizado.trim().split('\n');
         
-        if (lineas.length === 1 && lineas[0].includes(',')) {
-            const partes = lineas[0].split(',');
-            if (partes.length > 4) {
-                const header = partes.slice(0, 4).join(',');
-                const data = partes.slice(4).join(',');
-                lineas = [header, data];
-            }
-        }
-        
         const esHeader = lineas[0]?.toLowerCase().includes('nombre');
         const datos = esHeader ? lineas.slice(1) : lineas;
         
-        const productos = datos.map(linea => {
-            const [nombre, imagen, precio, cantidad] = linea.split(',');
+        productosGlobal = datos.map(linea => {
+            const campos = parseCSVLine(linea);
             return {
-                nombre: nombre?.trim() || '',
-                imagen: imagen?.trim() || '',
-                precio: precio?.trim() || '',
-                cantidad: parseInt(cantidad?.trim()) || 0
+                nombre: campos[0]?.trim() || '',
+                descripcion: campos[1]?.trim() || '',
+                precio: campos[2]?.trim() || '',
+                cantidad: parseInt(campos[3]?.trim()) || 0,
+                imagen: campos[4]?.trim() || '',
+                categoria: campos[5]?.trim() || ''
             };
         });
         
-        renderizarProductos(productos);
+        const categorias = [...new Set(productosGlobal.map(p => p.categoria))];
+        renderizarFiltroCategorias(categorias);
+        filtrarProductos();
     } catch (error) {
         console.error('Error cargando productos:', error);
         const grid = document.getElementById('productosGrid');
