@@ -2,6 +2,26 @@ const PRODUCTOS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRiVb
 
 let productosGlobal = [];
 let categoriaActual = 'todos';
+let htmlCargado = false;
+
+async function cargarHTMLProductos() {
+    if (htmlCargado) return;
+    
+    const container = document.getElementById('productos-app');
+    if (!container) {
+        console.error('No se encontró el elemento productos-app');
+        return;
+    }
+    
+    try {
+        const response = await fetch('productos/productos.html');
+        const html = await response.text();
+        container.innerHTML = html;
+        htmlCargado = true;
+    } catch (error) {
+        console.error('Error cargando HTML de productos:', error);
+    }
+}
 
 function parseCSVLine(linea) {
     const resultado = [];
@@ -122,6 +142,8 @@ function renderizarProductos(productos) {
 }
 
 async function cargarProductos() {
+    await cargarHTMLProductos();
+    
     try {
         const response = await fetch(PRODUCTOS_CSV_URL);
         const csvText = await response.text();
