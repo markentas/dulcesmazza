@@ -1,0 +1,12 @@
+GET
+http://127.0.0.1:5500/dulcesmazza/img/slider/21.jpg
+[HTTP/1.1 404 Not Found 1ms]
+
+Advertencias de política de seguridad de contenido 5
+Content-Security-Policy: Ignorar "'report-sample'" dentro de script-src: 'estricto-dinámico' embed
+Content-Security-Policy: Ignorar "'unsafe-inline'" dentro de script-src: 'estricto-dinámico' embed
+Content-Security-Policy: Ignorar "https:" dentro de script-src: 'estricto-dinámico' embed
+Content-Security-Policy: Ignorar "http:" dentro de script-src: 'estricto-dinámico' embed
+Content-Security-Policy: Ignorar "'unsafe-inline'" dentro de script-src: se especificó fuente nonce o hash-source embed
+Search endpoint requested! init_embed.js:329:348
+Se proporcionó cookie particionada o acceso de almacenamiento a "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3697.986636028192!2d-63.70325032375954!3d-22.05010670781877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x940f2fdae005d867%3A0x173d1c0cc83ab0d5!2sDulces%20Mazza!5e0!3m2!1ses!2sar!4v1772248069077!5m2!1ses!2sar" porque se carga en el contexto de terceros y está habilitada la partición de estado dinámico. main.js:179:224

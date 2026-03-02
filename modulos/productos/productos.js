@@ -1,8 +1,8 @@
-const PRODUCTOS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRiVbA-NGrlRAZFV__2mMy5Cdw3FOsrD7hA5HiovvBYZDK9BeLk3aZs28UjQVuaceEKHHoDgdTd36VY/pub?output=csv';
-
 let productosGlobal = [];
 let categoriaActual = 'todos';
 let htmlCargado = false;
+
+const MODULO_PATH = 'modulos/productos';
 
 async function cargarHTMLProductos() {
     if (htmlCargado) return;
@@ -14,7 +14,7 @@ async function cargarHTMLProductos() {
     }
     
     try {
-        const response = await fetch('productos/productos.html');
+        const response = await fetch(MODULO_PATH + '/productos.html');
         const html = await response.text();
         container.innerHTML = html;
         htmlCargado = true;
@@ -114,11 +114,11 @@ function renderizarProductos(productos) {
     grid.innerHTML = productos.map((producto) => {
         const cantidad = parseInt(producto.cantidad) || 0;
         const esAgotado = cantidad === 0;
-        const mensajeWhatsApp = `Hola%2C%20quiero%20pedir%20${encodeURIComponent(producto.nombre)}`;
+        const mensajeWhatsApp = `${PRODUCTOS_CONFIG.whatsapp.mensaje}${encodeURIComponent(producto.nombre)}`;
         
         const imagenSrc = (producto.imagen && (producto.imagen.startsWith('http') || producto.imagen.startsWith('https')))
             ? producto.imagen 
-            : `productos/img/${producto.imagen}`;
+            : `${MODULO_PATH}/img/${producto.imagen}`;
         
         const precioNumero = parseInt(producto.precio) || 0;
         const precioFormateado = precioNumero > 0 ? '$' + precioNumero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : producto.precio;
@@ -133,7 +133,7 @@ function renderizarProductos(productos) {
                     ${esAgotado 
                         ? '<span class="producto-agotado-badge">AGOTADO</span>' 
                         : `<div class="producto-disponibles">Disponible: ${cantidad}</div>
-                           <a href="https://wa.me/5493873237712?text=${mensajeWhatsApp}" target="_blank" class="producto-btn">PEDIR</a>`
+                           <a href="https://wa.me/${PRODUCTOS_CONFIG.whatsapp.numero}?text=${mensajeWhatsApp}" target="_blank" class="producto-btn">PEDIR</a>`
                     }
                 </div>
             </div>
@@ -145,7 +145,7 @@ async function cargarProductos() {
     await cargarHTMLProductos();
     
     try {
-        const response = await fetch(PRODUCTOS_CSV_URL);
+        const response = await fetch(PRODUCTOS_CONFIG.csvUrl);
         const csvText = await response.text();
         
         const textoNormalizado = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
