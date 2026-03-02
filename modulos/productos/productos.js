@@ -114,7 +114,7 @@ function renderizarProductos(productos) {
     grid.innerHTML = productos.map((producto) => {
         const cantidad = parseInt(producto.cantidad) || 0;
         const esAgotado = cantidad === 0;
-        const mensajeWhatsApp = `${PRODUCTOS_CONFIG.whatsapp.mensaje}${encodeURIComponent(producto.nombre)}`;
+        const mensajeWhatsApp = `${encodeURIComponent(PRODUCTOS_CONFIG.whatsapp.mensaje)}${encodeURIComponent(producto.nombre)}`;
         
         const imagenSrc = (producto.imagen && (producto.imagen.startsWith('http') || producto.imagen.startsWith('https')))
             ? producto.imagen 
