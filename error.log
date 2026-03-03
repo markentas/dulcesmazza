@@ -1,27 +1,15 @@
-2 mar 2026, 23:58:35
-Depuración
-Iniciando eliminación de imagen: https://res.cloudinary.com/dkenj9wlq/image/upload/v1772496537/clientes/pqjumzjl1suhutvvuvd8.jpg
-2 mar 2026, 23:58:35
-Depuración
-Public ID extraído: clientes/pqjumzjl1suhutvvuvd8.jpg
-2 mar 2026, 23:58:35
-Depuración
-Public ID sin extensión: clientes/pqjumzjl1suhutvvuvd8
-2 mar 2026, 23:58:35
-Depuración
-Timestamp: 1772506715
-2 mar 2026, 23:58:35
-Depuración
-String a firmar: public_id=clientes/pqjumzjl1suhutvvuvd8&timestamp=1772506715Coi2rL_MqYLk9KPOfE6PGcBUBjA
-2 mar 2026, 23:58:35
-Depuración
-Signature: 57619d8c7614d1a5a188628ec886b373971b36bb
-2 mar 2026, 23:58:35
-Depuración
-URL: https://api.cloudinary.com/v1_1/dkenj9wlq/image/destroy
-2 mar 2026, 23:58:35
-Depuración
-Payload: public_id=clientes%2Fpqjumzjl1suhutvvuvd8&timestamp=1772506715&api_key=181648881235587&signature=57619d8c7614d1a5a188628ec886b373971b36bb
-2 mar 2026, 23:58:35
-Depuración
-Excepción: Exception: No tienes permiso para llamar a UrlFetchApp.fetch. Permisos necesarios: https://www.googleapis.com/auth/script.external_request. Para obtener más información, consulta https://developers.google.com/apps-script/guides/support/troubleshooting#authorization-is
+Actúa como un experto en UI/UX Designer. Genera el código HTML y CSS para una interfaz de index-local.html usando Bootstrap 5.3.
+
+Quiero un diseño moderno, minimalista, sobrio y estético para un panel admin siguiendo estas directrices:
+
+    Estilo Glassmorphism: Usa tarjetas (.card) con fondos semi-transparentes, bordes sutiles y un efecto de desenfoque (backdrop-filter: blur).
+
+    Tipografía: Usa fuentes de Google Fonts (como 'Poppins' o 'Quicksand') para un look limpio.
+
+    Paleta de Colores: Usa tonos [ej: pasteles, o champagne y chocolate para dulces] con gradientes suaves en los botones.
+
+    Sombras: No uses las sombras por defecto de Bootstrap; pide box-shadow suaves y profundas para dar profundidad.
+
+    Componentes: Incluye un Navbar minimalista, una tabla de datos con bordes redondeados y estados hover animados en los botones.
+
+    Refinamiento: Asegúrate de que haya mucho 'espacio en blanco' (padding y margin amplios) para que el diseño respire.

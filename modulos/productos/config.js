@@ -1,6 +1,6 @@
 const CONFIG_INPUT = {
     // Puedes pegar la URL completa de edición, visualización o publicación
-    googleSheetUrl: 'https://docs.google.com/spreadsheets/d/1_6H6n1oY2apGFBSaqOpxgHqkq8WUiMk1RJZ22-LyX2U/edit?hl=es&gid=0#gid=0',
+    googleSheetUrl: 'https://docs.google.com/spreadsheets/d/1GPvfX7NQ-RSYNJcnv0tDH8mfR-o1nNLFzXcSW2uhHeQ/edit?gid=0#gid=0',
     whatsapp: {
         numero: '5493873237712',
         mensaje: 'Hola, quiero pedir '
