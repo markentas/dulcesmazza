@@ -1,6 +1,8 @@
 let productosGlobal = [];
 let categoriaActual = 'todos';
 let htmlCargado = false;
+let paginaActual = 1;
+const PRODUCTOS_POR_PAGINA = 6;
 
 const MODULO_PATH = 'modulos/productos';
 
@@ -75,9 +77,9 @@ function renderizarFiltroCategorias(categorias) {
     });
 }
 
+let productosFiltrados = [];
+
 function filtrarProductos() {
-    let productosFiltrados;
-    
     if (categoriaActual === 'todos') {
         productosFiltrados = productosGlobal;
     } else {
@@ -86,7 +88,9 @@ function filtrarProductos() {
         );
     }
     
+    paginaActual = 1;
     renderizarProductos(productosFiltrados);
+    renderizarPaginacion();
 }
 
 function renderizarProductos(productos) {
@@ -108,10 +112,15 @@ function renderizarProductos(productos) {
                 <a href="#categorias" class="producto-btn">VER CATÁLOGOS</a>
             </div>
         `;
+        document.getElementById('paginacion')?.remove();
         return;
     }
     
-    grid.innerHTML = productos.map((producto) => {
+    const inicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
+    const fin = inicio + PRODUCTOS_POR_PAGINA;
+    const productosPagina = productos.slice(inicio, fin);
+    
+    grid.innerHTML = productosPagina.map((producto) => {
         const cantidad = parseInt(producto.cantidad) || 0;
         const esAgotado = cantidad === 0;
         const mensajeWhatsApp = `${encodeURIComponent(PRODUCTOS_CONFIG.whatsapp.mensaje)}${encodeURIComponent(producto.nombre)}`;
@@ -131,7 +140,7 @@ function renderizarProductos(productos) {
                     <p class="producto-descripcion">${producto.descripcion || ''}</p>
                     <p class="producto-precio">${precioFormateado}</p>
                     ${esAgotado 
-                        ? '<span class="producto-agotado-badge">AGOTADO</span>' 
+                        ? '<span class="producto-agotado-badge">VENDIDO</span>' 
                         : `<div class="producto-disponibles">Disponible: ${cantidad}</div>
                            <a href="https://wa.me/${PRODUCTOS_CONFIG.whatsapp.numero}?text=${mensajeWhatsApp}" target="_blank" class="producto-btn">PEDIR</a>`
                     }
@@ -179,3 +188,52 @@ async function cargarProductos() {
 }
 
 document.addEventListener('DOMContentLoaded', cargarProductos);
+
+// ============================================
+// PAGINACIÓN
+// ============================================
+function renderizarPaginacion() {
+    const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
+    
+    if (totalPaginas <= 1) {
+        document.getElementById('paginacion')?.remove();
+        return;
+    }
+    
+    let paginacionExistente = document.getElementById('paginacion');
+    if (!paginacionExistente) {
+        const grid = document.getElementById('productosGrid');
+        const paginacion = document.createElement('div');
+        paginacion.id = 'paginacion';
+        paginacion.className = 'paginacion';
+        grid.parentNode.insertBefore(paginacion, grid.nextSibling);
+    }
+    
+    const paginacion = document.getElementById('paginacion');
+    let html = '';
+    
+    html += `<button class="page-btn ${paginaActual === 1 ? 'disabled' : ''}" onclick="cambiarPagina(${paginaActual - 1})" ${paginaActual === 1 ? 'disabled' : ''}>
+        <i class="fas fa-chevron-left"></i>
+    </button>`;
+    
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= paginaActual - 1 && i <= paginaActual + 1)) {
+            html += `<button class="page-btn ${i === paginaActual ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
+        } else if (i === paginaActual - 2 || i === paginaActual + 2) {
+            html += `<span class="page-dots">...</span>`;
+        }
+    }
+    
+    html += `<button class="page-btn ${paginaActual === totalPaginas ? 'disabled' : ''}" onclick="cambiarPagina(${paginaActual + 1})" ${paginaActual === totalPaginas ? 'disabled' : ''}>
+        <i class="fas fa-chevron-right"></i>
+    </button>`;
+    
+    paginacion.innerHTML = html;
+}
+
+function cambiarPagina(n) {
+    paginaActual = n;
+    renderizarProductos(productosFiltrados);
+    renderizarPaginacion();
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+}
