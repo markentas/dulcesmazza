@@ -96,8 +96,8 @@
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    flex: 0 1 calc(50% - 12px);
-    max-width: calc(50% - 12px);
+    flex: 0 1 calc(33.333% - 12px);
+    max-width: calc(33.333% - 12px);
 }
 
 @media (max-width: 768px) {
